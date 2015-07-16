@@ -13,7 +13,7 @@ namespace RedFolder.Microservices.Projects.Models
         public Link(int source, int target)
         {
             Source = source;
-            target = target;
+            Target = target;
         }
     }
 }

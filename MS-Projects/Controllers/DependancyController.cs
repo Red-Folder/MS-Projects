@@ -13,31 +13,11 @@ namespace RedFolder.Microservices.Projects.Controllers
 {
     public class DependanciesController : ApiController
     {
-        //DependancyGraph graph = new DependancyGraph
-        //{
-        //    Nodes = new Project[] { 
-        //        new Project {Name = "Project 1"},
-        //        new Project {Name = "Project 2"},
-        //        new Project {Name = "Project 3"},
-        //        new Project {Name = "Project 4"},
-        //        new Project {Name = "Project 5"}
-        //    },
-
-        //    Links = new Link[] { 
-        //        new Link { Source = 0, Target = 1 },
-        //        new Link { Source = 0, Target = 2 },
-        //        new Link { Source = 1, Target = 3 },
-        //        new Link { Source = 2, Target = 3 },
-        //        new Link { Source = 3, Target = 4 },
-        //        new Link { Source = 3, Target = 5 }
-
-        //    }
-        //};
-
         public async Task<DependancyGraph> GetAllDependancies()
         {
 
-            var repositories = await Client.GetProjects();// .Result;
+
+            var repositories = await Client.GetProjects(APIKey.Key);// .Result;
 
             var nodes = new List<Project>();
             var links = new List<Link>();
