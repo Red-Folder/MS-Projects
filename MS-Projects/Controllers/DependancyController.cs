@@ -9,15 +9,26 @@ using RedFolder.Microservices.Projects.Models;
 using RedFolder.Microservices.Proxies.GitHub;
 using System.Threading.Tasks;
 
+using System.Web.Http.Cors;
+using System.Runtime.Caching;
+
 namespace RedFolder.Microservices.Projects.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class DependanciesController : ApiController
     {
         public async Task<DependancyGraph> GetAllDependancies()
         {
+            ObjectCache cache = MemoryCache.Default;
 
+            var graph = cache.Get("DependancyGraph") as DependancyGraph;
+            if (graph != null)
+            {
+                return graph;
+            }
 
-            var repositories = await Client.GetProjects(APIKey.Key);// .Result;
+            var client = new Client();
+            var repositories = await client.GetProjects(GitHubCredentials.User, GitHubCredentials.Key);// .Result;
 
             var nodes = new List<Project>();
             var links = new List<Link>();
@@ -36,7 +47,11 @@ namespace RedFolder.Microservices.Projects.Controllers
                 }
             }
 
-            return new DependancyGraph(nodes.ToArray(), links.ToArray());
+            graph = new DependancyGraph(nodes.ToArray(), links.ToArray());
+            CacheItemPolicy policy = new CacheItemPolicy { AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(5) };
+            cache.Add("DependancyGraph", graph, policy);
+
+            return graph;
         }
     }
 }

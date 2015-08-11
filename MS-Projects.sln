@@ -1,11 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MS-Projects", "MS-Projects\MS-Projects.csproj", "{3DDF76DA-AD4B-41AF-9977-186D0963A737}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GitHubProxy", "GitHubProxy\GitHubProxy.csproj", "{6A5CF851-467A-4236-84F3-CFE36D1FAA8D}"
+EndProject
+Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "MS-Projects.Azure", "MS-Projects.Azure\MS-Projects.Azure.ccproj", "{C04B8B76-0C9A-4BAF-9C5C-6AB189AB5E26}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Octokit", "remote\octokit.net\Octokit\Octokit.csproj", "{08DD4305-7787-4823-A53F-4D0F725A07F3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,14 @@ Global
 		{6A5CF851-467A-4236-84F3-CFE36D1FAA8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6A5CF851-467A-4236-84F3-CFE36D1FAA8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6A5CF851-467A-4236-84F3-CFE36D1FAA8D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C04B8B76-0C9A-4BAF-9C5C-6AB189AB5E26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C04B8B76-0C9A-4BAF-9C5C-6AB189AB5E26}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C04B8B76-0C9A-4BAF-9C5C-6AB189AB5E26}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C04B8B76-0C9A-4BAF-9C5C-6AB189AB5E26}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08DD4305-7787-4823-A53F-4D0F725A07F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08DD4305-7787-4823-A53F-4D0F725A07F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08DD4305-7787-4823-A53F-4D0F725A07F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08DD4305-7787-4823-A53F-4D0F725A07F3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
