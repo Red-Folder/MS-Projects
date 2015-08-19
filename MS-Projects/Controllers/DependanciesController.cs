@@ -34,16 +34,47 @@ namespace RedFolder.Microservices.Projects.Controllers
             var links = new List<Link>();
 
             nodes.AddRange(from r in repositories
-                           select new Project(r.Name, "TODO", "https://github.com/Red-Folder/MS-Projects/ProjectLogo.png"));
+                           select new Project(r.Name, r.Description, r.LogoUrl.ToString()));
 
-            foreach (var repository in repositories.Where(x => x.SubModules.Length > 0))
+            foreach (var repository in repositories.Where(x => x.SubModules.Count > 0))
             {
                 int source = nodes.FindIndex(x => x.Name == repository.Name);
 
                 foreach (var subModule in repository.SubModules)
                 {
                     int target = nodes.FindIndex(x => x.Name == subModule.Name);
-                    links.Add(new Link(source, target, "green", new List<string>()));
+
+                    var subModuleRepo = repositories.Where(x => x.Name == subModule.Name).FirstOrDefault();
+
+                    // Have we found the subModule - if not then skip - likely to be a remote submodule
+                    if (subModuleRepo != null)
+                    {
+                        // TODO - Convert to an enum
+                        var rag = "red";
+                        var shasBehind = new List<string>();
+
+                        // Does the SHA exist at all (likely to be due to changes in the submodule folder not being checked in
+                        if (subModuleRepo.SHAs.Where(x => x == subModule.SHA).Count() > 0)
+                        { 
+                            // Is this the latest SHA?
+                            if (subModule.SHA.Equals(subModuleRepo.SHAs[0]))
+                            {
+                                rag = "green";
+                            }
+                            else
+                            {
+                                // How many SHAs are we behind?
+                                var indexNo = subModuleRepo.SHAs.FindIndex(x => x == subModule.SHA);
+
+                                shasBehind.AddRange(from sha in subModuleRepo.SHAs.GetRange(0, indexNo)
+                                                    select sha);
+
+                                rag = "amber";
+                            }
+                        }
+
+                        links.Add(new Link(source, target, rag, shasBehind));
+                    }
                 }
             }
 
@@ -53,5 +84,6 @@ namespace RedFolder.Microservices.Projects.Controllers
 
             return graph;
         }
+
     }
 }

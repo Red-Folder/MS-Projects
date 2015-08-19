@@ -44,6 +44,7 @@ namespace RedFolder.Microservices.Proxies.GitHub
                     var contents = await github.Repository.Content.GetAllContents(repository.Owner.Login, repository.Name, basePath);
                     AddMetric("Repository.Content.GetAllContents", github.GetLastApiInfo());
 
+                    var logoPath = contents.Where(x => x.Name.ToLower().Equals("projectlogo.png")).FirstOrDefault().DownloadUrl;
                     var remoteFolder = contents.Where(x => x.Name.ToLower().Equals("remote")).Where(x => x.Type == ContentType.Dir).FirstOrDefault();
                     if (remoteFolder != null)
                     {
@@ -62,7 +63,7 @@ namespace RedFolder.Microservices.Proxies.GitHub
                         }
                     }
 
-                    result.Add(new Models.Repository(repository.Id, repository.Name, modelSHAs.ToArray(), modelSubModules.ToArray()));
+                    result.Add(new Models.Repository(repository.Id, repository.Name, repository.Description, logoPath, modelSHAs, modelSubModules));
                 }
             }
             catch (RateLimitExceededException rateException)
