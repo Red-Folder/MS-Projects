@@ -34,7 +34,7 @@ namespace RedFolder.Microservices.Projects.Controllers
             var links = new List<Link>();
 
             nodes.AddRange(from r in repositories
-                           select new Project(r.Name));
+                           select new Project(r.Name, "TODO", "https://github.com/Red-Folder/MS-Projects/ProjectLogo.png"));
 
             foreach (var repository in repositories.Where(x => x.SubModules.Length > 0))
             {
@@ -43,7 +43,7 @@ namespace RedFolder.Microservices.Projects.Controllers
                 foreach (var subModule in repository.SubModules)
                 {
                     int target = nodes.FindIndex(x => x.Name == subModule.Name);
-                    links.Add(new Link(source, target));
+                    links.Add(new Link(source, target, "green", new List<string>()));
                 }
             }
 
