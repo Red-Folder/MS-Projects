@@ -1,4 +1,0 @@
-[submodule "remote/octokit.net"]
-	path = remote/octokit.net
-	url = https://github.com/Red-Folder/octokit.net.git
-	branch = RateLimitInfoHack
