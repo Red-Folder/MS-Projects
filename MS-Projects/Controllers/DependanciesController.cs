@@ -50,7 +50,7 @@ namespace RedFolder.Microservices.Projects.Controllers
                     if (subModuleRepo != null)
                     {
                         // TODO - Convert to an enum
-                        var rag = "red";
+                        Link.RAG rag = Link.RAG.red;
                         var shasBehind = new List<string>();
 
                         // Does the SHA exist at all (likely to be due to changes in the submodule folder not being checked in
@@ -59,7 +59,7 @@ namespace RedFolder.Microservices.Projects.Controllers
                             // Is this the latest SHA?
                             if (subModule.SHA.Equals(subModuleRepo.SHAs[0]))
                             {
-                                rag = "green";
+                                rag = Link.RAG.green;
                             }
                             else
                             {
@@ -69,7 +69,7 @@ namespace RedFolder.Microservices.Projects.Controllers
                                 shasBehind.AddRange(from sha in subModuleRepo.SHAs.GetRange(0, indexNo)
                                                     select sha);
 
-                                rag = "amber";
+                                rag = Link.RAG.amber;
                             }
                         }
 

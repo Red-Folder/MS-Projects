@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -15,16 +17,47 @@ namespace RedFolder.Microservices.Projects.Models
         [DataMember(Name = "target")]
         public int Target { get; private set; }
         [DataMember(Name = "rag")]
-        public string RAG { get; private set; }
-        [DataMember(Name = "shas_behind")]
-        public IList<string> SHAs_Behind { get; private set; }
+        [JsonConverter(typeof(StringEnumConverter))]
+        public RAG Rag { get; private set; }
+        [DataMember(Name = "rag_message")]
+        public string Rag_Message
+        {
+            get
+            {
+                if (Rag == RAG.red)
+                {
+                    return "Missing commit";
+                }
+                else
+                {
+                    if (Rag == RAG.amber)
+                    {
+                        return String.Format("{0} commit(s) behind master", SHAs_Behind.Count);
+                    }
+                    else
+                    {
+                        return "All good";
+                    }
+                }
+            }
+        }
+        private IList<string> SHAs_Behind { get; set; }
 
-        public Link(int source, int target, string rag, List<string> shasBehind)
+        public Link(int source, int target, RAG rag, List<string> shasBehind)
         {
             Source = source;
             Target = target;
-            RAG = rag;
+            Rag = rag;
             SHAs_Behind = shasBehind.AsReadOnly();
         }
+
+        public enum RAG
+        {
+            red,
+            amber,
+            green
+        }
+
     }
+
 }
